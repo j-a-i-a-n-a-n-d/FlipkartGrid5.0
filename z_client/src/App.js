@@ -12,7 +12,7 @@ function App() {
         <Route path="/" element={ token ? <Navigate to="/home" /> : <EnterPortal/> } />
         <Route path="register" element={ <Register/> } />
         <Route path="login" element={<Login />} />
-        <Route path="home" element={<Home />} />
+        <Route path="home" element={ /*token ?*/ <Home /> /*: <Navigate to="/login" />*/ } />
         <Route path="*" element={<h1>Not Found</h1>} />
       </Routes>
     </div>

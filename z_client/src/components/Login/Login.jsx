@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 import logo from "../../assets/fashion.svg";
+import Cookies from 'js-cookie';
 const Login = () => {
     const initialValues = { email: '', password: '' };
     const [formValues, setFormValues] = useState(initialValues);
@@ -25,6 +26,7 @@ const Login = () => {
             .then(res => {
                 // console.log(res);
                 setIsError(false);
+                Cookies.set('jwt', res.data.data.access_token);
                 setTimeout(() => {
                     navigate('/home');
                     window.location.reload();
