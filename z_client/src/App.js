@@ -1,14 +1,15 @@
 import './App.css';
-import { Routes, Route } from "react-router-dom"
-// import EnterPortal from './components/EnterPortal/EnterPortal';
-// import Register from './components/Register/Register';
-// import Login from './components/Login/Login';
+import { Routes, Route, Navigate } from "react-router-dom"
 import { Home, Login, Register, EnterPortal } from './components/index';
+import { getToken } from './utils/auth'; 
+
 function App() {
+  const token = getToken(); 
+
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={ <EnterPortal/> } />
+        <Route path="/" element={ token ? <Navigate to="/home" /> : <EnterPortal/> } />
         <Route path="register" element={ <Register/> } />
         <Route path="login" element={<Login />} />
         <Route path="home" element={<Home />} />
