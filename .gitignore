@@ -1,0 +1,6 @@
+db.sqlite3
+app/__pycache__/
+app/migrations/__pycache__/
+tally/__pycache__/
+test/
+.env
