@@ -9,6 +9,8 @@ from rest_framework import status
 from .serializers import *
 from decouple import config
 import jwt
+from rest_framework.permissions import IsAuthenticated
+from tally.jwtauth import *
 
 
 class HomeView(APIView):
@@ -71,3 +73,24 @@ class LogoutView(APIView):
             "message": "success"
         }
         return response
+
+
+class TextToImageView(APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, id):
+        prompt = request.data.get("text")
+
+        try:
+            user_history = UserHistory.objects.get(user_id=id)
+            user_history.description = prompt + " " + user_history.description
+            print(1)
+            user_history.save()
+            return Response("success", status=status.HTTP_200_OK)
+        except UserHistory.DoesNotExist:
+            print(2)
+            user = User.objects.get(id=id)
+            user_history = UserHistory.objects.create(
+                user=user, description=prompt)
+            return Response("success", status=status.HTTP_200_OK)
