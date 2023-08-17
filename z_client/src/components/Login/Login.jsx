@@ -24,9 +24,9 @@ const Login = () => {
                 password: formValues.password
             })
             .then(res => {
-                // console.log(res);
+                console.log(res.data);
                 setIsError(false);
-                Cookies.set('jwt', res.data.data.access_token);
+                Cookies.set('jwt', res.data.access_token);
                 setTimeout(() => {
                     navigate('/home');
                     window.location.reload();
