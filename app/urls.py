@@ -23,4 +23,5 @@ urlpatterns = [
     path("logout/", LogoutView.as_view(), name="logout"),
     path("register/", RegisterView.as_view(), name="register"),
     path("text2image/", TextToImageView.as_view(), name="text-to-image"),
+    path('userhistory/', UserHistoryListView.as_view(), name='user-history'),
 ]

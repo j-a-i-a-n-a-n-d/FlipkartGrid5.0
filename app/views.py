@@ -11,6 +11,7 @@ from decouple import config
 import jwt
 from rest_framework.permissions import IsAuthenticated
 from tally.jwtauth import *
+from .genai import *
 
 
 class HomeView(APIView):
@@ -68,7 +69,6 @@ class LogoutView(APIView):
     def post(self, req):
         response = Response()
         response.delete_cookie('jwt')
-        # response.delete_cookie('refresh_token')
         response.data = {
             "message": "success"
         }
@@ -80,17 +80,31 @@ class TextToImageView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
+        user_id = request.user.id
         prompt = request.data.get("text")
-
         try:
-            user_history = UserHistory.objects.get(user_id=id)
-            user_history.description = prompt + " " + user_history.description
-            print(1)
-            user_history.save()
-            return Response("success", status=status.HTTP_200_OK)
-        except UserHistory.DoesNotExist:
-            print(2)
-            user = User.objects.get(id=id)
+            blob_url = text2image(prompt)
+            user = User.objects.get(id=user_id)
             user_history = UserHistory.objects.create(
-                user=user, description=prompt)
-            return Response("success", status=status.HTTP_200_OK)
+                user=user, description=prompt, blob_url=blob_url)
+            user_history.save()
+            response_data = {
+                "user_id": user_id,
+                "id": user_history.id,
+                "blob_url": blob_url,
+                "description": prompt,
+            }
+            return Response(response_data, status=status.HTTP_200_OK)
+        except:
+            return Response("Error... Failed Task ", status=status.HTTP_400_BAD_REQUEST)
+
+
+class UserHistoryListView(APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        user_id = request.user.id
+        user_history = UserHistory.objects.filter(user_id=user_id)
+        serializer = UserHistorySerializer(user_history, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)

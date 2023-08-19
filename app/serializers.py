@@ -12,3 +12,9 @@ class UserSerializer(serializers.ModelSerializer):
         #         "write_only": True
         #     }
         # }
+
+
+class UserHistorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserHistory
+        fields = "__all__"
