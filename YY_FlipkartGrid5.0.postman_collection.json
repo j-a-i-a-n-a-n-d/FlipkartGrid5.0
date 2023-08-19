@@ -1,0 +1,96 @@
+{
+	"info": {
+		"_postman_id": "a7389e35-20aa-4351-bfc9-ca6510440358",
+		"name": "YY_FlipkartGrid5.0",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "23432918"
+	},
+	"item": [
+		{
+			"name": "testView",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "localhost:8000/api/testView/"
+			},
+			"response": []
+		},
+		{
+			"name": "Register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\" : \"jai\",\r\n    \"password\" : \"jai\",\r\n    \"email\" : \"jai@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "localhost:8000/api/register/"
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\" : \"jai\",\r\n    \"password\" : \"jai\",\r\n    \"email\" : \"jai@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "localhost:8000/api/login/"
+			},
+			"response": []
+		},
+		{
+			"name": "logout",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": "localhost:8000/api/logout/"
+			},
+			"response": []
+		},
+		{
+			"name": "Image2Text",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImQyM2MxNTliLTJlMWQtNDI1MC05NWI2LWExYzczMmRlMGI0MSIsImV4cCI6MTY5MjEzNjczNCwiaWF0IjoxNjkxNTMxOTM0fQ.8V-9RCt3pif7wN3QRxEF22TwCYrGUBeyIsevDppxTTM"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"text\" : \"olive blue label\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "localhost:8000/api/text2image/"
+			},
+			"response": []
+		},
+		{
+			"name": "userhistory/:id/",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}
