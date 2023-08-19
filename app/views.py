@@ -79,7 +79,7 @@ class TextToImageView(APIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
 
-    def post(self, request, id):
+    def post(self, request):
         prompt = request.data.get("text")
 
         try:

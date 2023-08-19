@@ -5,7 +5,7 @@ import { getToken } from './utils/auth';
 
 function App() {
   const token = getToken(); 
-  console.log(token);
+  // console.log(token);
   return (
     <div className="App">
       <Routes>
