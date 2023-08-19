@@ -83,16 +83,18 @@ class TextToImageView(APIView):
         user_id = request.user.id
         prompt = request.data.get("text")
         try:
-            blob_url = text2image(prompt)
+            print(user_id, prompt)  # <------------
+            blob_url, new_prompt = text2image(prompt, user_id)
+            print(blob_url, prompt)  # <------------
             user = User.objects.get(id=user_id)
             user_history = UserHistory.objects.create(
-                user=user, description=prompt, blob_url=blob_url)
+                user=user, description=new_prompt, blob_url=blob_url)
             user_history.save()
             response_data = {
                 "user_id": user_id,
                 "id": user_history.id,
                 "blob_url": blob_url,
-                "description": prompt,
+                "description": new_prompt,
             }
             return Response(response_data, status=status.HTTP_200_OK)
         except:

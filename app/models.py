@@ -22,3 +22,12 @@ class UserHistory(models.Model):
 
     def __str__(self):
         return f"{self.user.email}"
+
+
+class UserContext(models.Model):
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='context_entries')
+    context = models.TextField()
+
+    def __str__(self):
+        return f"{self.user.email}"

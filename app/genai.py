@@ -6,15 +6,15 @@ import os
 import openai
 import requests
 import json
-from IPython.display import Image, display
-from IPython.display import HTML
 from .azure_setup import upload_to_blob_storage
+from .models import UserHistory, UserContext, User
 
 API_URL = "https://api-inference.huggingface.co/models/Adrenex/fastgen"
 headers = {"Authorization": "Bearer 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"}
-openai.api_key  = "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"
+openai.api_key = "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"
 
-context = [ {'role':'system', 'content':"""
+
+context = [{'role': 'system', 'content': """
 You are a NLP expert and do the following:
 1) User will enter a prompt (to a text to image model), then the prompt is to be returned.
 2) Then again, the user will be asked to enter another prompt, which will be in continuation of the first prompt. Then this needs to be merged appropriately with the first prompt, and new prompt will be returned.
@@ -49,29 +49,44 @@ Return: Red Tshirt
 Notice that red replaces Green since both are colors
 """}]
 
+
 def get_completion_from_messages(messages, model="gpt-3.5-turbo", temperature=0):
     response = openai.ChatCompletion.create(
         model=model,
         messages=messages,
-        temperature=temperature, # this is the degree of randomness of the model's output
+        temperature=temperature,  # this is the degree of randomness of the model's output
     )
     return response.choices[0].message["content"]
 
-def collect_messages(prompt):
 
-
-    #Yaha pe context fetch krna hai db se
-
-
-    context.append({'role':'user', 'content':f"{prompt}"})
-    response = get_completion_from_messages(context) 
-    context.append({'role':'assistant', 'content':f"{response}"})
-
-
-    #yaha pe content push krna hai db pe
-
-
-    return response
+def collect_messages(prompt, id):
+    global context  # userid from User table
+    user = User.objects.get(id=id)
+    context_entries = UserContext.objects.filter(user=user).first()
+    print(context_entries, " ", user)  # <-------------------
+    if context_entries is not None:
+        print("hello", context_entries)
+        context = context_entries.context
+        context = json.loads(context.replace("'", "\""))
+        context.append({'role': 'user', 'content': f"{prompt}"})
+        response = get_completion_from_messages(context)
+        context.append({'role': 'assistant', 'content': f"{response}"})
+        print("\n", context)
+        print(type(context))
+        context_entries.context = context
+        context_entries.save(update_fields=['context'])
+    else:
+        print("hell")
+        print(context)
+        context.append({'role': 'user', 'content': f"{prompt}"})
+        response = get_completion_from_messages(context)
+        context.append({'role': 'assistant', 'content': f"{response}"})
+        user = User.objects.get(id=id)
+        context_entries = UserContext.objects.create(
+            user=user, context=context)
+        print(context_entries)  # <-------------------
+        context_entries.save()
+    return response  # new prompt
 
 
 def query(payload):
@@ -79,12 +94,10 @@ def query(payload):
     return response.content
 
 
-def text2image(prompt):
-
-    new_prompt = collect_messages(prompt)
-
-    #ye new prompt print krvana hai web page pe
-
+def text2image(prompt, id):
+    print(prompt, id)      # <-------------------
+    new_prompt = collect_messages(prompt, id)
+    print(new_prompt, id)  # <-------------------
     image_bytes = query({
         "inputs": new_prompt,
     })
@@ -97,4 +110,4 @@ def text2image(prompt):
         print(f"Image file '{image_path}' deleted successfully.")
 
     image.save("test1.png", format="png")
-    return upload_to_blob_storage()
+    return upload_to_blob_storage(), new_prompt
