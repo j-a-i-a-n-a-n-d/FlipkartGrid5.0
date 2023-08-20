@@ -43,7 +43,7 @@
       .separate-image {
         width: 80%; /* Set the width to 50% of the container */
         height: 80%; /* Fill the container vertically */
-        background-image: url("../../assets/reg1.jpg"); /* Set the image */
+        background-image: url("../../assets/register-page.png"); /* Set the image */
         background-size: cover;
         background-position: center;
         animation: slide-in-left 1s forwards;
@@ -87,6 +87,11 @@
                 font-size: medium;
                 
               }
+              &:focus {
+                outline: none; 
+                 border: none;
+                 border-bottom: 2px solid black;  
+         }
           }
           
         }
