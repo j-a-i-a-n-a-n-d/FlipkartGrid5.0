@@ -50,6 +50,8 @@ Clone the repository
   JWT_ALGORITHM=""
   AZURE_ACCOUNT_URI=""
   AZURE_ACCOUNT_NAME=""
+  HUGGING_FACE_TOKEN=""
+  OPENAI_API_KEY=""
 ```
  - activate a new environment named test
  ```bash
@@ -73,6 +75,7 @@ Clone the repository
    npm start
   ```
 
+![App Screenshot](screenshots/methodology.jpeg)
     
 ### Methodology
 Data Scrapping
