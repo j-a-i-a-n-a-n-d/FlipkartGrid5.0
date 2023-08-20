@@ -3,4 +3,11 @@
 :root{
     font-family: 'Lato', sans-serif;
     font-family: 'Barlow', sans-serif;
+    padding: 0px;
+    margin: 0px;
+}
+body{
+    padding: 0px;
+    margin: 0px;
+    overflow-y: hidden
 }

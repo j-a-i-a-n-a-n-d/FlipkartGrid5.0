@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import "./Home.scss";
 import axios from "axios";
-
+import Cookies from "js-cookie";
 const Home = () => {
     const [inputData, setInputData] = useState('');
-
     const handleKeyPress = (event) => {
         if (event.key === "Enter") handleGoClick();
     };
@@ -15,8 +14,15 @@ const Home = () => {
         console.log("GO button clicked with input:", inputData);
         console.log(inputData.length)
         if (inputData.length !== 0) {
+            console.log(Cookies.get('jwt'));
             axios
-                .post("http://127.0.0.1:8000/text2image/", { text: inputData })
+                .post("http://localhost:8000/api/text2image/",
+                    { text: inputData },
+                    {
+                        headers: {
+                            'Authorization': Cookies.get('jwt'),
+                        }
+                    })
                 .then((res) => console.log(res.data))
                 .catch((err) => console.log(err));
         }
@@ -29,7 +35,11 @@ const Home = () => {
     }, []);
     const fetchData = () => {
         axios
-            .post("http://127.0.0.1:8000/userhistory/")
+            .get("http://localhost:8000/api/userhistory/", {
+                headers: {
+                    'Authorization': Cookies.get('jwt'),
+                }
+            })
             .then((res) => console.log(res.data))
             .catch((err) => console.log(err));
     };
@@ -44,9 +54,9 @@ const Home = () => {
                     value={inputData}
                     onChange={handleChange}
                     onKeyUp={handleKeyPress}
-                    placeholder="type here to prompt fashion gpt..."
+                    placeholder="Type here to Prompt Fashion GPT..."
                 />
-                <button id="go-button" onClick={handleGoClick}>GO</button>
+                <button id="go-button" onClick={handleGoClick}> &gt;&gt;</button>
             </div>
         </div>
     );

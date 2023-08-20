@@ -10,6 +10,8 @@ class JWTAuthentication(BaseAuthentication):
         token = request.COOKIES.get('jwt')
 
         if not token:
+            token = request.headers.get("Authorization", None)
+        if not token:
             return None
         try:
             payload = jwt.decode(token, config("JWT_SECRET"), algorithms=[

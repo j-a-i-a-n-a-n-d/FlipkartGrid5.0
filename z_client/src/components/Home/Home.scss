@@ -1,0 +1,49 @@
+.home{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    background-color: #353640;
+    .top-chat-container{}
+    .bottom-chat-box{
+        padding-bottom:50px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        border-radius: 10px;
+        padding-top: 60px;
+        background-color: #353640;
+        input{
+            background-color: #40414F;
+            width: 50vw;
+            height: 8vh;
+            border: none;
+            padding: 0px;
+            border-top-left-radius: 10px;
+            border-bottom-left-radius: 10px;
+            &::placeholder{
+                padding: 18px;
+                color: #8E8EA0;
+                font-size: 15px;
+                vertical-align: middle;
+            }
+        }
+        button{
+            padding: 0px;
+            margin: 0px;
+            border: none;
+            background-color: #40414F;
+            height:8vh;
+            border: none;
+            width: 4vw;
+            color: white;
+            cursor: pointer;
+            border-top-right-radius: 10px;
+            border-bottom-right-radius: 10px;
+            color: #8E8EA0;
+            font-weight: bolder;
+        }
+    }
+}
