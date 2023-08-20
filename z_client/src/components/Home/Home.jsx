@@ -4,6 +4,8 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import userIcon from "../../assets/user.png"
 import F from '../../assets/f.png';
+import QuestionMark from "../../assets/question.png";
+import logo from "../../assets/2.svg";
 const Home = () => {
     const [inputData, setInputData] = useState('');
     const handleKeyPress = (event) => {
@@ -73,7 +75,12 @@ const Home = () => {
                 />
                 <button id="go-button" onClick={handleGoClick}> &gt;&gt;</button>
             </div>
-        </div >
+            <div className="logout-button"><button>Logout</button></div>
+            <div className="question-mark"><img src={QuestionMark} /></div>
+            <div className="how-to-use">Instructions to Use</div>
+            <object className="logo" type="image/svg+xml" data={logo} width="150" height="150">Your browser does not support SVG.</object>
+            <div className="profile-info"><img src={userIcon} width="40" height="40" /></div>
+        </div>
     );
 }
 

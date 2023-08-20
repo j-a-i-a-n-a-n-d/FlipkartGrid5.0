@@ -9,7 +9,7 @@ import json
 from .azure_setup import upload_to_blob_storage
 from .models import UserHistory, UserContext, User
 
-API_URL = "https://api-inference.huggingface.co/models/Adrenex/fastgen"
+API_URL = "https://api-inference.huggingface.co/models/Falah/fashion-model"
 headers = {"Authorization": "Bearer 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"}
 openai.api_key = "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"
 

@@ -11,3 +11,26 @@ body{
     margin: 0px;
     overflow-y: hidden
 }
+.question-mark > img:hover {
+    transform: scale(1.1);
+    visibility: visible;
+    opacity: 1;
+}
+::-webkit-scrollbar {
+    width: 7px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #20212d;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #444654;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }

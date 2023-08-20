@@ -6,6 +6,7 @@
     justify-content: flex-end;
     align-items: center;
     background-color: #353640;
+    position: relative;
     .top-chat-container{
         border: none;
         background-color: #353640;
@@ -31,7 +32,6 @@
                 flex-direction: column;
                 gap: 15px;
                 .desc{
-                    // width: 100vw;
                     padding: 15px 25px;
                     font-size: 18px;
                     font-weight: 500;
@@ -61,7 +61,7 @@
                     }
                     img{
                         width:200px;
-                        height: 200px;
+                        height: 250px;
                         border-radius: 5px;
                     }
                 }
@@ -96,8 +96,8 @@
                 vertical-align: middle;
             }
             &:focus {
-        outline: none; /* Remove the default focus outline */
-        border: none;  /* Remove the border when focused */
+        outline: none; 
+        border: none;  
     }
         }
         button{
@@ -114,6 +114,60 @@
             border-bottom-right-radius: 10px;
             color: #8E8EA0;
             font-weight: bolder;
+        }
+    }
+    .logout-button>button{
+        position: absolute;
+        top: 90vh;
+        right: 30px;
+        background-color: #444654;
+        border: none;
+        color: #8E8EA0;
+        font-size: 16px;
+        font-weight: 500;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        border: 1px solid #8E8EA0;
+        &:hover{
+            background-color: #353640;
+            transform: scale(1.05);
+        }
+    }
+    .question-mark>img{
+        position: absolute;
+        width: 40px;
+        height: 40px;
+        top: 90vh;
+        left: 30px;
+        cursor: pointer;
+    }
+    .how-to-use{
+        position: absolute;
+        width: 300px;
+        top: 80vh;
+        left: 30px;
+        visibility: hidden;
+    }
+    .logo{
+        position: absolute;
+        top: -3vh;
+        left: -10px;
+        cursor: pointer;
+        &:hover{
+            transform: scale(1.05);
+            cursor: pointer;
+        }
+    }
+    .profile-info{
+        position: absolute;
+        top: 3vh;
+        right: 40px;
+        // background-color: #353640;
+        // border-radius: 50%;
+        &:hover{
+            transform: scale(1.05);
+            cursor: pointer;
         }
     }
 }
