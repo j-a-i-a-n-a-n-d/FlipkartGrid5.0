@@ -2,12 +2,14 @@ import React, { useEffect, useState } from "react";
 import "./Home.scss";
 import axios from "axios";
 import Cookies from "js-cookie";
+import userIcon from "../../assets/user.png"
+import F from '../../assets/f.png';
 const Home = () => {
     const [inputData, setInputData] = useState('');
     const handleKeyPress = (event) => {
         if (event.key === "Enter") handleGoClick();
     };
-
+    const [userHistory, setUserHistory] = useState([]);
     const handleChange = (e) => setInputData(e.target.value);
 
     const handleGoClick = () => {
@@ -23,16 +25,11 @@ const Home = () => {
                             'Authorization': Cookies.get('jwt'),
                         }
                     })
-                .then((res) => console.log(res.data))
+                .then((res) => { console.log(res.data); fetchData(); setInputData(''); })
                 .catch((err) => console.log(err));
         }
     };
-    useEffect(() => {
 
-    });
-    useEffect(() => {
-        fetchData();
-    }, []);
     const fetchData = () => {
         axios
             .get("http://localhost:8000/api/userhistory/", {
@@ -40,13 +37,31 @@ const Home = () => {
                     'Authorization': Cookies.get('jwt'),
                 }
             })
-            .then((res) => console.log(res.data))
+            .then((res) => { console.log(res.data); setUserHistory(res.data) })
             .catch((err) => console.log(err));
     };
+    useEffect(() => {
+        fetchData();
+    }, []);
 
     return (
         <div className="home">
-            <div className="top-chat-container"></div>
+            <div className="top-chat-container">
+                {userHistory.map((data) => {
+                    return <div className="wrapping-item">
+                        <div className="item">
+                            <div className="desc">
+                                <span>{data.description}</span>
+                                <img src={userIcon} alt="user icon" />
+                            </div>
+                            <div className="image-wrap">
+                                <span><img src={F} /></span>
+                                <img src={data.blob_url} loading="lazy" alt="result" />
+                            </div>
+                        </div>
+                    </div>
+                })}
+            </div>
             <div className="bottom-chat-box">
                 <input
                     name="search"
@@ -58,7 +73,7 @@ const Home = () => {
                 />
                 <button id="go-button" onClick={handleGoClick}> &gt;&gt;</button>
             </div>
-        </div>
+        </div >
     );
 }
 

@@ -6,7 +6,70 @@
     justify-content: flex-end;
     align-items: center;
     background-color: #353640;
-    .top-chat-container{}
+    .top-chat-container{
+        border: none;
+        background-color: #353640;
+        width: 100vw;
+        height: 80vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        .wrapping-item{
+            width: 100vw;
+            background-color: #444654;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 10px 0px;
+            .item{
+                width: 52vw;
+                padding-left: 20vw;
+                padding-right: 20vw;
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+                .desc{
+                    // width: 100vw;
+                    padding: 15px 25px;
+                    font-size: 18px;
+                    font-weight: 500;
+                    background-color: #353640;
+                    color: #ECECF1;
+                    font-family: 'Lato', sans-serif;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: flex-end;
+                    align-items: center;
+                    gap: 15px;
+                    border-radius: 10px;
+                    img{
+                        width: 30px;
+                        height: 30px;
+                    }
+                }
+                .image-wrap{
+                    display: flex;
+                    flex-direction: row;
+                    gap: 20px;
+                    span{
+                        img{
+                            width: 30px;
+                            height: 30px;
+                        }
+                    }
+                    img{
+                        width:200px;
+                        height: 200px;
+                        border-radius: 5px;
+                    }
+                }
+                
+            }
+        }
+        
+    }
     .bottom-chat-box{
         padding-bottom:50px;
         display: flex;
@@ -23,12 +86,19 @@
             padding: 0px;
             border-top-left-radius: 10px;
             border-bottom-left-radius: 10px;
+            color: #8E8EA0;
+            padding-left: 20px;
+            font-size: 16px;
             &::placeholder{
                 padding: 18px;
                 color: #8E8EA0;
                 font-size: 15px;
                 vertical-align: middle;
             }
+            &:focus {
+        outline: none; /* Remove the default focus outline */
+        border: none;  /* Remove the border when focused */
+    }
         }
         button{
             padding: 0px;
