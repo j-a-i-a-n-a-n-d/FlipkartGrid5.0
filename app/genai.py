@@ -8,10 +8,11 @@ import requests
 import json
 from .azure_setup import upload_to_blob_storage
 from .models import UserHistory, UserContext, User
+from decouple import config
 
 API_URL = "https://api-inference.huggingface.co/models/Adrenex/chamana"
-headers = {"Authorization": "Bearer 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"}
-openai.api_key = "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"
+headers = {"Authorization": config('HUGGING_FACE_TOKEN')}
+openai.api_key = config('OPENAI_API_KEY')
 
 
 context = [{'role': 'system', 'content': """
