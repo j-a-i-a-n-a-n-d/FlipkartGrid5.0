@@ -6,6 +6,7 @@ import userIcon from "../../assets/user.png"
 import F from '../../assets/f.png';
 import QuestionMark from "../../assets/question.png";
 import logo from "../../assets/2.svg";
+import { useNavigate } from "react-router-dom"
 const Home = () => {
     const [inputData, setInputData] = useState('');
     const handleKeyPress = (event) => {
@@ -13,7 +14,7 @@ const Home = () => {
     };
     const [userHistory, setUserHistory] = useState([]);
     const handleChange = (e) => setInputData(e.target.value);
-
+    let navigate = useNavigate();
     const handleGoClick = () => {
         console.log("GO button clicked with input:", inputData);
         console.log(inputData.length)
@@ -31,6 +32,19 @@ const Home = () => {
                 .catch((err) => console.log(err));
         }
     };
+
+    const handleLogout = () => {
+        axios
+            .post("http://localhost:8000/api/logout/")
+            .then((res) => {
+                Cookies.remove('jwt');
+                setTimeout(() => {
+                    navigate('/');
+                    window.location.reload();
+                }, 1000);
+            })
+            .catch((res) => console.log(res));
+    }
 
     const fetchData = () => {
         axios
@@ -75,7 +89,7 @@ const Home = () => {
                 />
                 <button id="go-button" onClick={handleGoClick}> &gt;&gt;</button>
             </div>
-            <div className="logout-button"><button>Logout</button></div>
+            <div className="logout-button"><button onClick={handleLogout}>Logout</button></div>
             <div className="question-mark"><img src={QuestionMark} /></div>
             <div className="how-to-use">Instructions to Use</div>
             <object className="logo" type="image/svg+xml" data={logo} width="150" height="150">Your browser does not support SVG.</object>
