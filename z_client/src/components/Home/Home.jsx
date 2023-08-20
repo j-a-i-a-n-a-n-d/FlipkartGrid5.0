@@ -46,6 +46,18 @@ const Home = () => {
             .catch((res) => console.log(res));
     }
 
+    const handleResetContext = () => {
+        axios
+            .post("http://localhost:8000/api/deletecontext/",
+                { text: inputData },
+                {
+                    headers: {
+                        'Authorization': Cookies.get('jwt'),
+                    }
+                })
+            .then(res => console.log(res))
+            .catch(res => console.log(res))
+    }
     const fetchData = () => {
         axios
             .get("http://localhost:8000/api/userhistory/", {
@@ -94,6 +106,7 @@ const Home = () => {
             <div className="how-to-use">Instructions to Use</div>
             <object className="logo" type="image/svg+xml" data={logo} width="150" height="150">Your browser does not support SVG.</object>
             <div className="profile-info"><img src={userIcon} width="40" height="40" /></div>
+            <div className="resetContext" onClick={handleResetContext}><button>Reset Context</button></div>
         </div>
     );
 }

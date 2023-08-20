@@ -24,4 +24,6 @@ urlpatterns = [
     path("register/", RegisterView.as_view(), name="register"),
     path("text2image/", TextToImageView.as_view(), name="text-to-image"),
     path('userhistory/', UserHistoryListView.as_view(), name='user-history'),
+    path('deletecontext/', ResetContextListView.as_view(),
+         name='deletecontext'),
 ]

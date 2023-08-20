@@ -9,7 +9,7 @@ import json
 from .azure_setup import upload_to_blob_storage
 from .models import UserHistory, UserContext, User
 
-API_URL = "https://api-inference.huggingface.co/models/Falah/fashion-model"
+API_URL = "https://api-inference.huggingface.co/models/Adrenex/chamana"
 headers = {"Authorization": "Bearer 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"}
 openai.api_key = "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"
 
@@ -111,3 +111,40 @@ def text2image(prompt, id):
 
     image.save("test1.png", format="png")
     return upload_to_blob_storage(), new_prompt
+
+
+def resetContext():
+    context = [{'role': 'system', 'content': """
+You are a NLP expert and do the following:
+1) User will enter a prompt (to a text to image model), then the prompt is to be returned.
+2) Then again, the user will be asked to enter another prompt, which will be in continuation of the first prompt. Then this needs to be merged appropriately with the first prompt, and new prompt will be returned.
+3) This will go on and on as long as user inputs.
+4) Make sure to Strictly return the new prompt only, nothing else, even without The first prompt is.
+
+Example 1: 
+First prompt: Red kurta
+Return: Red Kurta
+
+Second Prompt: Keep it long
+Return: Red long kurta
+
+Third Prompt: suitable for diwali occasion
+Return: Red long kurta for Diwali
+
+Forth Prompt: For kids
+Display: Red long kurta for Kids and for Diwali
+
+Return: Keep it short
+Display: Red short kurta for Kids and for Diwali
+
+Notice that, Short will replace Long. 
+
+Example 2:
+First prompt: Green Tshirt
+Return: Green Tshirt
+
+Second Prompt: make it red
+Return: Red Tshirt
+
+Notice that red replaces Green since both are colors
+"""}]

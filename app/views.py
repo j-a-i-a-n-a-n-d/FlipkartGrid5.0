@@ -12,6 +12,7 @@ import jwt
 from rest_framework.permissions import IsAuthenticated
 from tally.jwtauth import *
 from .genai import *
+import time
 
 
 class HomeView(APIView):
@@ -85,10 +86,15 @@ class TextToImageView(APIView):
         try:
             print(user_id, prompt)  # <------------
             blob_url, new_prompt = text2image(prompt, user_id)
+            time.sleep(3)
+            blob_url1, new_prompt1 = text2image(prompt+" HD", user_id)
             print(blob_url, prompt)  # <------------
             user = User.objects.get(id=user_id)
             user_history = UserHistory.objects.create(
                 user=user, description=new_prompt, blob_url=blob_url)
+            user_history.save()
+            user_history = UserHistory.objects.create(
+                user=user, description=new_prompt+"(Recommended Image)", blob_url=blob_url1)
             user_history.save()
             response_data = {
                 "user_id": user_id,
@@ -110,3 +116,15 @@ class UserHistoryListView(APIView):
         user_history = UserHistory.objects.filter(user_id=user_id)
         serializer = UserHistorySerializer(user_history, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class ResetContextListView(APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        user_id = request.user.id
+        resetContext()
+        user_context = UserContext.objects.filter(user_id=user_id)
+        user_context.delete()
+        return Response("Context Reset", status=status.HTTP_200_OK)
